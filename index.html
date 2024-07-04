@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget Tracker</title>
+    <style>
+        body{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 70vh;
+            margin:0;
+            color: hsl(0, 0%, 100%); /* White text */
+            background-color: hsl(0, 0%, 8%); /* OffBlack background */
+        }
+        div{
+            width: 90%;
+            max-width: 500px;
+            background-color: hsl(0, 0%, 12%); /* DarkGrey background */
+            padding: 20px;
+            border-radius: 15px;
+        }
+        form {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        label{
+            width: 60px;
+            margin-right: 10;
+            color: hsl(75, 94%, 57%); /* Green background on hover */
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            width: 7ch;
+            text-align: right;
+            margin-right: 5px;
+            border: 1px solid hsl(0, 0%, 20%); /* Grey border */
+            background-color: hsl(0, 0%, 8%); /* OffBlack background */
+            color: hsl(0, 0%, 100%); /* White text */
+        }
+
+        input[type="submit"] {
+            width: auto;
+            margin-left: 5px;
+            border: 1px solid hsl(0, 0%, 20%); /* Grey border */
+            background-color: hsl(0, 0%, 20%); /* Grey background */
+            color: hsl(0, 0%, 100%); /* White text */
+        }
+
+    input[type="submit"]:hover {
+        background-color: hsl(75, 94%, 57%); /* Green background on hover */
+        color: hsl(0, 0%, 8%); /* OffBlack background */
+
+    }
+    </style>
+</head>
+<body>
+    <div>
+    <form id="rent">
+        <label for="rent-display">Rent</label>
+        <input type="text" id="rent-display" name="rent-display" value="20000" readonly/>
+        <input type="number" id="rent-input" name="rent-input" />
+        <input type="submit" value="Minus" onclick="setValues('rent-input','rent-display','')">
+        <input type="submit" value="Reset" onclick="setValues('rent-input','rent-display','20000')">
+    </form>
+    <form id="water">
+        <label for="water-display">Water</label>
+        <input type="text" id="water-display" name="water-display" value="1700" readonly/>
+        <input type="number" id="water-input" name="water-input" />
+        <input type="submit" value="Minus" onclick="setValues('water-input','water-display','')">
+        <input type="submit" value="Reset" onclick="setValues('water-input','water-display','1700')">
+    </form>
+    <form id="light">
+        <label for="light-display">Light</label>
+        <input type="text" id="light-display" name="light-display" value="1500" readonly/>
+        <input type="number" id="light-input" name="light-input" />
+        <input type="submit" value="Minus" onclick="setValues('light-input','light-display','')">
+        <input type="submit" value="Reset" onclick="setValues('light-input','light-display','1500')">
+    </form>
+    <form id="maid">
+        <label for="maid-display">Maid</label>
+        <input type="text" id="maid-display" name="maid-display" value="2000" readonly/>
+        <input type="number" id="maid-input" name="maid-input" />
+        <input type="submit" value="Minus" onclick="setValues('maid-input','maid-display','')">
+        <input type="submit" value="Reset" onclick="setValues('maid-input','maid-display','2000')">
+    </form>
+    <form id="grocer">
+        <label for="grocer-display">Grocer</label>
+        <input type="text" id="grocer-display" name="grocer-display" value="10000" readonly/>
+        <input type="number" id="grocer-input" name="grocer-input" />
+        <input type="submit" value="Minus" onclick="setValues('grocer-input','grocer-display','')">
+        <input type="submit" value="Reset" onclick="setValues('grocer-input','grocer-display','10000')">
+    </form>
+    <form id="travel">
+        <label for="travel-display">Travel</label>
+        <input type="text" id="travel-display" name="travel-display" value="2000" readonly/>
+        <input type="number" id="travel-input" name="travel-input" />
+        <input type="submit" value="Minus" onclick="setValues('travel-input','travel-display','')">
+        <input type="submit" value="Reset" onclick="setValues('travel-input','travel-display','2000')">
+    </form>
+    <form id="dine">
+        <label for="dine-display">DineOut</label>
+        <input type="text" id="dine-display" name="dine-display" value="3000" readonly/>
+        <input type="number" id="dine-input" name="dine-input" />
+        <input type="submit" value="Minus" onclick="setValues('dine-input','dine-display','')">
+        <input type="submit" value="Reset" onclick="setValues('dine-input','dine-display','3000')">
+    </form>
+    <form id="misc">
+        <label for="misc-display">Misc</label>
+        <input type="text" id="misc-display" name="misc-display" value="3800" readonly/>
+        <input type="number" id="misc-input" name="misc-input" />
+        <input type="submit" value="Minus" onclick="setValues('misc-input','misc-display','')">
+        <input type="submit" value="Reset" onclick="setValues('misc-input','misc-display','3800')">
+    </form>
+    </div>
+    <script>
+        for (let [key, value] of Object.entries(localStorage)) {
+            document.getElementById(key).value = value
+        }
+
+        function setValues(inputId, displayId, resetVal)
+        {
+            if(resetVal!='')
+            {
+                const displayField = document.getElementById(displayId)
+                displayField.value = parseFloat(resetVal)
+
+                localStorage.setItem(displayId, parseFloat(resetVal))               
+            }
+
+            const inputVal = parseFloat(document.getElementById(inputId).value)
+            if(isNaN(inputVal))
+            {
+                return ;
+            }
+            const displayField = document.getElementById(displayId)
+            const displayVal = parseFloat(displayField.value)
+            
+            displayField.value = displayVal - inputVal
+
+            localStorage.setItem(displayId, displayVal - inputVal)
+        }
+
+        document.querySelectorAll('form').forEach(form => {
+            form.addEventListener('submit', (event) => {
+                event.preventDefault();
+            });
+        });
+    </script>
+</body>
+
+</html>
